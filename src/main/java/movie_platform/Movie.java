@@ -103,45 +103,42 @@ public class Movie {
         if (!producer.contains(producerName)) {
             producer.add(producerName);
             System.out.println("Режиссёр добавлен: " + producerName);
-        } else {
+        }else {
             System.out.println("Этот режиссёр уже добавлен.");
         }
     }
-
     public void removeProducer(String producerName) {
         if (producer.remove(producerName)) {
             System.out.println("Режиссёр удалён: " + producerName);
-        } else {
+        }else {
             System.out.println("Режиссёр не найден.");
         }
     }
-
-    public void addActor(String actorName) {
+    public void addActor(String actorName){
         if (!actors.contains(actorName)) {
             actors.add(actorName);
             System.out.println("Актёр добавлен: " + actorName);
-        } else {
+        }else {
             System.out.println("Этот актёр уже добавлен.");
         }
     }
-
-    public void removeActor(String actorName) {
-        if (actors.remove(actorName)) {
+    public void removeActor(String actorName){
+        if (actors.remove(actorName)){
             System.out.println("Актёр удалён: " + actorName);
-        } else {
+        }else {
             System.out.println("Актёр не найден.");
         }
     }
 
 
     public void updateStatus(MovieStatus newStatus) {
-        if (newStatus == null) {
+        if (newStatus == null){
             System.out.println("Некорректный статус. Обновление не выполнено.");
             return;
         }
         MovieStatus status = MovieStatus.values()[0];
 
-        switch (newStatus) {
+        switch (newStatus){
             case PLANNED:
                 System.out.println("Фильм теперь находится в производстве.");
                 break;
@@ -153,7 +150,7 @@ public class Movie {
                 break;
         }
 
-        if (status == newStatus) {
+        if (status == newStatus){
             System.out.println("Фильм уже имеет статус: " + newStatus);
             return;
         }
