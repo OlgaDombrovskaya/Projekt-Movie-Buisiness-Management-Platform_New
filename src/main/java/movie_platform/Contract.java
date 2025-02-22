@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 @Slf4j
 public class Contract {
+    // Геттеры (методы для получения значений полей)
     private String id;                    // Уникальный идентификатор контракта
     private String personName;            // Имя человека, с которым заключен контракт
     private String role;                  // Роль человека в проекте
@@ -20,31 +21,6 @@ public class Contract {
         this.startDate = startDate;
         this.endDate = endDate;
         this.salary = salary;
-    }
-
-    // Геттеры (методы для получения значений полей)
-    public String getId() {
-        return id;
-    }
-
-    public String getPersonName() {
-        return personName;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public double getSalary() {
-        return salary;
     }
 
     // Сеттеры (методы для изменения значений полей с проверкой)
@@ -113,5 +89,9 @@ public class Contract {
                 ", endDate='" + endDate + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    public Object getId() {
+        return id;
     }
 }
