@@ -208,7 +208,6 @@ public class Premiere {
         return report; // Возвращаем строку отчета
     }
 }
-
     /* Эмуляция отправки отчета по электронной почте
     public void sendReportByEmail() {
         String report = generateReport();
