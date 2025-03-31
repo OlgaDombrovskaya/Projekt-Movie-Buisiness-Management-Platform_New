@@ -1,29 +1,41 @@
-package movie_platform;
+package movie_platform.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import movie_platform.enums.MovieGenre;
+import movie_platform.enums.MovieStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+@Getter
+@Setter
+@ToString
 @Slf4j
 public class Movie {
+
     private String id;                        // Уникальный идентификатор фильма
     private String title;                     // Название фильма
-    private String genre;                     // Жанр фильма
-    private String startDate;                 // Дата начала показа фильма
-    private String endDate;                   // Дата окончания показа фильма
+    private MovieGenre genre;                 // Жанр фильма
+    private LocalDate startDate;              // Дата начала показа фильма
+    private LocalDate endDate;                // Дата окончания показа фильма
     private MovieStatus status;               // Статус фильма (PLANNED, IN_PROGRESS, COMPLETED)
     private double budget;                    // Бюджет фильма
     private List<String> producer;            // Список продюсеров фильма
     private List<String> actors;              // Список актёров фильма
 
     // Конструктор с минимальным набором данных для создания фильма
-    public Movie(String movieId, String title, MovieStatus movieStatus) {
+    public Movie(String movieId, String title, MovieStatus movieStatus, MovieGenre genre) {
         this.id = movieId;
         this.title = title;
         this.status = movieStatus;
+        this.genre = genre;
+
     }
     // Конструктор, инициализирующий все поля фильма
-    public Movie(String id, String title, String genre, String startDate, String endDate,
+    public Movie(String id, String title, MovieGenre genre, LocalDate startDate, LocalDate endDate,
                  MovieStatus status, double budget, List<String> producer, List<String> actors) {
 
         this.id = id;
@@ -33,37 +45,8 @@ public class Movie {
         this.endDate = endDate;
         this.status = status;
         this.budget = budget;
-        this.producer = producer;
-        this.actors = actors;
-    }
-
-    // Геттеры для получения значений полей
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public MovieStatus getStatus() {
-        return status;
-    }
-
-    public double getBudget() {
-        return budget;
+        this.producer = (producer != null) ? producer : new ArrayList<>();
+        this.actors = (actors != null) ? actors : new ArrayList<>();
     }
 
     public List<String> getProducer() {
@@ -97,26 +80,28 @@ public class Movie {
         this.title = title;
     }
 
-    public void setGenre(String genre) {
-        if (genre == null || genre.trim().isEmpty()) {
+    public void setGenre(MovieGenre genre) {
+        if (genre == null) {
             System.out.println("Жанр не может быть пустым.");
             return;
         }
         this.genre = genre;
     }
 
-    public void setStartDate(String startDate) {
-        if (startDate == null || startDate.trim().isEmpty()) {
+    public void setStartDate(LocalDate startDate) {
+        if (startDate == null) {
             System.out.println("Дата начала не может быть пустой.");
             log.warn("Дата начала не может быть пустой.");
+            return;
         }
         this.startDate = startDate;
     }
 
-    public void setEndDate(String endDate) {
-        if (endDate == null || endDate.trim().isEmpty()) {
+    public void setEndDate(LocalDate endDate) {
+        if (endDate == null) {
             System.out.println("Дата окончания не может быть пустой.");
             log.warn("Дата окончания не может быть пустой.");
+            return;
         }
         this.endDate = endDate;
     }
@@ -160,29 +145,32 @@ public class Movie {
             log.warn("Имя продюсера не может быть пустым.");
             return;
         }
+        if (producer == null){
+            producer = new ArrayList<>();
+        }
         if (!producer.contains(producerName)) {
             producer.add(producerName);
-            System.out.println("Продюсера добавлен: " + producerName);
-            log.info("Продюсера добавлен: {}", producerName);
+            System.out.println("Продюсер добавлен: " + producerName);
+            log.info("Продюсер добавлен: {}", producerName);
         } else {
-            System.out.println("Этот продюсера уже добавлен.");
-            log.warn("Этот продюсера уже добавлен.");
+            System.out.println("Этот продюсер уже добавлен.");
+            log.warn("Этот продюсер уже добавлен.");
         }
     }
 
     public void removeProducer(String producerName) {
 
-        if (producerName == null || producerName.trim().isEmpty()) {
+        if (producerName == null || producerName.trim().isEmpty() || producer == null || !producer.remove(producerName)) {
             System.out.println("Имя продюсера не может быть пустым.");
             log.warn("Имя продюсера не может быть пустым.");
             return;
         }
         if (producer.remove(producerName)) {
-            System.out.println("Продюсера удалён: " + producerName);
-            log.info("Продюсера удалён: {}", producerName);
+            System.out.println("Продюсер удалён: " + producerName);
+            log.info("Продюсер удалён: {}", producerName);
         } else {
-            System.out.println("Продюсера не найден.");
-            log.info("Продюсера не найден.");
+            System.out.println("Продюсер не найден.");
+            log.info("Продюсер не найден.");
         }
     }
 
@@ -193,6 +181,9 @@ public class Movie {
             System.out.println("Имя актёра не может быть пустым.");
             log.warn("Имя актёра не может быть пустым.");
             return;
+        }
+        if (actors == null){
+            actors = new ArrayList<>();
         }
         if (!actors.contains(actorName)) {
             actors.add(actorName);
@@ -206,7 +197,7 @@ public class Movie {
 
     public void removeActor(String actorName) {
 
-        if (actorName == null || actorName.trim().isEmpty()) {
+        if (actorName == null || actorName.trim().isEmpty() || actors == null || !actors.remove(actorName)) {
             System.out.println("Имя актёра не может быть пустым.");
             log.warn("Имя актёра не может быть пустым.");
             return;
@@ -227,48 +218,13 @@ public class Movie {
             return;
         }
 
-        // Метод для обновления статуса фильма
-        switch (newStatus) {
-            case PLANNED:
-                System.out.println("Фильм теперь находится в производстве.");
-                log.info("Фильм теперь находится в производстве.");
-                break;
-            case IN_PROGRESS:
-                System.out.println("Фильм теперь выпущен.");
-                log.info("Фильм теперь выпущен.");
-                break;
-            case COMPLETED:
-                System.out.println("Фильм отменён.");
-                log.info("Фильм отменён.");
-                break;
-            default:
-                System.out.println("Неизвестный статус.");
-                log.warn("Неизвестный статус.");
-        }
-
         if (status == newStatus) {
             System.out.println("Фильм уже имеет статус: " + newStatus);
-            log.info("Фильм уже имеет статус: {}", newStatus);
+            log.info("Фильм уже имеет статус: " + newStatus);
             return;
         }
         this.status = newStatus;
         System.out.println("Статус фильма успешно обновлён на: " + newStatus);
-        log.info("Статус фильма успешно обновлён на: {}", newStatus);
-    }
-
-    // Переопределение метода toString() для вывода информации о фильме
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", genre='" + genre + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", status=" + status +
-                ", budget=" + budget +
-                ", producer=" + producer +
-                ", actors=" + actors +
-                '}';
+        log.info("Статус фильма успешно обновлён на: " + newStatus);
     }
 }
