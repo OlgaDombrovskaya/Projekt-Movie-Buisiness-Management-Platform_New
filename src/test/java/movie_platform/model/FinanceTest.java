@@ -1,8 +1,7 @@
-package movie_platform;
+package movie_platform.model;
 
 import movie_platform.enums.FinanceType;
 import movie_platform.manager.FinanceManager;
-import movie_platform.model.FinanceRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

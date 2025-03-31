@@ -1,7 +1,6 @@
-package movie_platform;
+package movie_platform.model;
 
 import lombok.extern.slf4j.Slf4j;
-import movie_platform.model.Premiere;
 import movie_platform.repository.PremiereRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
